@@ -1,0 +1,35 @@
+.draggable-modal-paper {
+    width: 800px;
+    max-width: 90%; /* Optional: Adjust for responsive design */
+
+
+    margin: auto; /* Center the modal in the middle of the screen */
+  }
+  
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: #1976d2; /* MUI blue color */
+    color: white; /* White text for contrast */
+    cursor: move;
+  }
+  
+  .modal-content {
+    padding: 16px;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px;
+    gap: 8px; /* Space between buttons */
+  }
+  
+
+  .modal-par{
+    width: 500px;
+    height: 500px;
+    overflow: auto;
+  }

@@ -1,0 +1,32 @@
+.draggable-modal-paper {
+  /* width: 500px;
+  max-width: 80%;
+  margin: auto;  */
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: var(--primary); /* Blue header */
+  color: white; /* White text for contrast */
+  cursor: move;
+}
+
+.modal-content {
+  padding: 16px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  gap: 8px; /* Space between buttons */
+}
+
+
+.modal-button{
+  background: var(--primary) !important;  /* Blue header */
+  color: "white"  !important;
+}
