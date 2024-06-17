@@ -7,8 +7,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LayersIcon from '@mui/icons-material/Layers';
 import GroupIcon from '@mui/icons-material/Group';
-import MapWithPlacemark from './MapWithPlacemark';
-import TreeUI from './TreeUI';
+import RowGrouping from './RowGrouping';
+import CustomDateTimePickerUI from './CustomDateTimePickerUI';
 
 function TabPanel({ value, index, children, ...other }: any) {
 
@@ -65,6 +65,8 @@ function NavTabs() {
         <Tab icon={<NotificationsIcon />} label="EVENTS" {...a11yProps(3)} sx={{ color: 'white' }} />
 
       </Tabs>
+      
+      <TabPanel value={value} index={0}>
       <Tabs
         value={value1}
         onChange={handleChange1}
@@ -77,9 +79,8 @@ function NavTabs() {
         <Tab icon={<LayersIcon />} label="ZONES" {...a11yProps(1)} sx={{ color: 'white' }} />
         <Tab icon={<GroupIcon />} label="CLIENTS" {...a11yProps(2)} sx={{ color: 'white' }} />
       </Tabs>
-      <TabPanel value={value} index={0}>
         <TabPanel value={value1} index={0}>
-        <TreeUI />
+        <RowGrouping />
         </TabPanel>
         <TabPanel value={value1} index={1}>
           <span>  Zones Content</span>
@@ -89,7 +90,11 @@ function NavTabs() {
         </TabPanel>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <span>History Content</span>
+        {/* <span>History Content</span>
+         */}
+        <CustomDateTimePickerUI />
+        <CustomDateTimePickerUI />
+        <RowGrouping />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <span>Reports Content</span>

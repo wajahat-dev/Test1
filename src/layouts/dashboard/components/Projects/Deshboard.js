@@ -14,6 +14,7 @@ import NavTabs from "./NavTabs";
 import './Modal.css'; // Optional: Add custom styles if needed
 import MapWithPlacemark from './MapWithPlacemark';
 import TreeUI from './TreeUI';
+import RowGrouping from './RowGrouping';
 
 
 const Deshboard = ({}) => {
@@ -33,7 +34,7 @@ const Deshboard = ({}) => {
       <Grid item xs={7}>
         <Paper style={{  textAlign: 'center' }}>
         <MapWithPlacemark />
-
+{/* <RowGrouping /> */}
         </Paper>
       </Grid>
     </Grid>
