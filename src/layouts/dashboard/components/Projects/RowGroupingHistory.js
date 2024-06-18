@@ -1,26 +1,20 @@
-import { DirectionsCar, ExpandLess, ExpandMore, Folder, FolderOpen } from '@mui/icons-material';
-import { Checkbox, Grid, TextField, Tooltip, Typography } from '@mui/material';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import { Checkbox, FormControlLabel, FormGroup, Grid, IconButton, Menu, MenuItem, Tooltip, Typography, TextField } from '@mui/material';
+import { ExpandLess, ExpandMore, MoreVert } from '@mui/icons-material';
 
 const columns = [
   { field: 'object', headerName: 'Objects', width: 200 },
-  { field: 'status', headerName: 'Status', width: 150 },
-  { field: 'updated', headerName: 'Updated', width: 150 },
-  { field: 'tags', headerName: 'Tags', width: 150 },
-  { field: 'key', headerName: 'Key', width: 150 },
-  { field: 'number', headerName: 'Number', width: 150 },
-  { field: 'abc', headerName: 'WASL', width: 150 },
-  { field: 'abcdStatus', headerName: 'WASL Status', width: 150 }
+
 ];
 
 const initialRows = [
-  { id: 1, object: 'Parent 1', status: 'Active', updated: '2024-06-18', tags: 'Tag1', key: 'Key1', number: '123', abc: 'ABC1', abcdStatus: 'Status1', parent: null },
-  { id: 2, object: 'Child 1.1', status: 'Active', updated: '2024-06-18', tags: 'Tag2', key: 'Key2', number: '456', abc: 'ABC2', abcdStatus: 'Status2', parent: 1 },
-  { id: 3, object: 'Child 1.2', status: 'Inactive', updated: '2024-06-18', tags: 'Tag3', key: 'Key3', number: '789', abc: 'ABC3', abcdStatus: 'Status3', parent: 1 },
-  { id: 4, object: 'Parent 2', status: 'Inactive', updated: '2024-06-18', tags: 'Tag4', key: 'Key4', number: '101', abc: 'ABC4', abcdStatus: 'Status4', parent: null },
-  { id: 5, object: 'Child 2.1', status: 'Active', updated: '2024-06-18', tags: 'Tag5', key: 'Key5', number: '112', abc: 'ABC5', abcdStatus: 'Status5', parent: 4 },
-  { id: 6, object: 'Child 2.2', status: 'Inactive', updated: '2024-06-18', tags: 'Tag6', key: 'Key6', number: '131', abc: 'ABC6', abcdStatus: 'Status6', parent: 4 }
+  { id: 1, object: 'Parent 1', status: 'Active', parent: null },
+  { id: 2, object: 'Child 1.1', status: 'Active',  parent: 1 },
+  { id: 3, object: 'Child 1.2', status: 'Inactive', parent: 1 },
+  { id: 4, object: 'Parent 2', status: 'Inactive',  parent: null },
+  { id: 5, object: 'Child 2.1', status: 'Active', parent: 4 },
+  { id: 6, object: 'Child 2.2', status: 'Inactive',  parent: 4 }
 ];
 
 const getVisibleColumns = (allColumns, visibleColumnIds) => {
@@ -56,7 +50,7 @@ const getVisibleRows = (rows, expandedParents) => {
   return flattenRows(visibleRows);
 };
 
-export default function TreeGrid() {
+export default function RowGroupingHistory() {
   const [rows, setRows] = useState(initialRows);
   const [selectedRows, setSelectedRows] = useState(new Set());
   const [expandedParents, setExpandedParents] = useState(new Set());
@@ -126,7 +120,6 @@ export default function TreeGrid() {
   const visibleColumns = getVisibleColumns(columns, visibleColumnIds);
 
 
-
   const [searchText, setSearchText] = useState('');
 
   const handleSearch = (event) => {
@@ -159,7 +152,7 @@ export default function TreeGrid() {
       setRows(initialRows); // Reset to initial rows when filter text is empty
       return;
     }
-
+  
     // Function to recursively filter rows and include children
     const filterRowsRecursive = (rows, filterText) => {
       return rows.filter(row => {
@@ -169,55 +162,38 @@ export default function TreeGrid() {
         return matchesFilter || filteredChildren.length > 0;
       });
     };
-
+  
     // Filter rows recursively to include parents and their matching children
     const filteredRows = filterRowsRecursive(initialRows, filterText1);
     setRows(filteredRows);
   }, [filterText1]);
-
+  
   const handleFilterChange1 = (e) => {
     setFilterText1(e.target.value);
   };
 
-  const handleCellClick = (param, event) => {
-    event.defaultMuiPrevented = param.field === "Total";
-  };
-
 
   return (
-    // <div style={{ height: 600, width: '100%' }}>
-    <div style={{  width: '100%' }}>
-
-      <Grid container alignItems="center" spacing={2}>
-        {/* Filter by name TextField */}
-        <Grid item xs={6}>
-          <TextField
-            label="Filter by name"
-            variant="outlined"
-            fullWidth
-            value={filterText1}
-            onChange={handleFilterChange1}
-            style={{ marginBottom: 16 }}
-          />
-        </Grid>
-
-        {/* Search input */}
-        <Grid item xs={3}>
-          <TextField
-            // type="text"
-            placeholder="Search..."
-            value={searchText}
-            variant="outlined"
-
-            onChange={handleSearch}
-            style={{ marginBottom: '10px', padding: '5px', width: '100%' }}
-          />
-        </Grid>
-
-
-      </Grid>
-
-
+    <div style={{ height: 600, width: '100%' }}>
+ <TextField
+        label="Filter by name"
+        variant="outlined"
+        fullWidth
+        value={filterText1}
+        onChange={handleFilterChange1}
+        style={{ marginBottom: 16 }}
+      />
+<input
+        type="text"
+        placeholder="Search..."
+        value={searchText}
+        onChange={handleSearch}
+        style={{ marginBottom: '10px', padding: '5px' }}
+      />
+      <IconButton onClick={handleMenuOpen}>
+        <MoreVert />
+      </IconButton>
+      
       <DataGrid
         rows={visibleRows}
         columns={visibleColumns.map(col => {
@@ -238,28 +214,15 @@ export default function TreeGrid() {
                         )}
                       </Grid>
                     )}
-                    <Grid item>
-                      <Checkbox
-                        checked={selectedRows.has(params.row.id)}
-                        onChange={() => handleRowSelection(params.row.id)}
-                      />
-                    </Grid>
-                    {isParent ? <Grid item>
-                      {params.row.isExpanded ? (
-                        <FolderOpen style={{ fontSize: 24, }} />
-
-                      ) : (
-                        <Folder style={{ fontSize: 24, }} />
-
-                      )}
-                    </Grid>
-                      : <Grid item>
-                        <DirectionsCar style={{ fontSize: 24 }} />
-
-                      </Grid>}
-
+                   <Grid item>
+                        <Checkbox
+                          checked={selectedRows.has(params.row.id)}
+                          onChange={() => handleRowSelection(params.row.id)}
+                        />
+                      </Grid>
                     <Grid item>
                       <Tooltip title={`ID: ${params.row.id}`} placement="top">
+                        {/* <Typography>{params.value}</Typography> */}
                         <Typography>{renderCell(params)}</Typography>
                       </Tooltip>
                     </Grid>
@@ -281,21 +244,6 @@ export default function TreeGrid() {
         hideFooter
         disableColumnMenu
         disableSelectionOnClick
-        disableCellSelectionOnClick
-        slots={{ toolbar: GridToolbar }}
-        initialState={{
-          density: 'compact',
-        }}
-        onCellClick={handleCellClick}
-        
-        // sx={{
-        //   [`& .${gridClasses.columnHeader}, & .${gridClasses.cell}`]: {
-        //     outline: 'transparent',
-        //   },
-        //   [`& .${gridClasses.columnHeader}:focus-within, & .${gridClasses.cell}:focus-within`]: {
-        //     outline: 'none',
-        //   },
-        // }}
       />
     </div>
   );

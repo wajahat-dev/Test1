@@ -9,6 +9,8 @@ import LayersIcon from '@mui/icons-material/Layers';
 import GroupIcon from '@mui/icons-material/Group';
 import RowGrouping from './RowGrouping';
 import CustomDateTimePickerUI from './CustomDateTimePickerUI';
+import RowGroupingHistory from './RowGroupingHistory';
+import DragableModalUI from 'components/DragableModalUI';
 
 function TabPanel({ value, index, children, ...other }: any) {
 
@@ -18,6 +20,11 @@ function TabPanel({ value, index, children, ...other }: any) {
       hidden={value !== index}
       id={`tabpanel-${index}`}
       aria-labelledby={`tab-${index}`}
+      // style={{
+      //   height: '100%',
+      //   display: value === index ? 'block' : 'none',
+      //   overflow: 'auto', // Add overflow:auto if you want scrollbars when content exceeds height
+      // }}
       {...other}
     >
       {value === index && (
@@ -49,9 +56,17 @@ function NavTabs() {
     setValue1(newValue);
   };
 
+  const handleClosexxx= ()=>{
+
+  }
+
+  const handleClosexxx1= ()=>{
+    
+  }
+
   return (
     // <Box sx={{ width: '100%' }}>
-    <div>
+    <div style={{ height: '100%' }}>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -81,6 +96,7 @@ function NavTabs() {
       </Tabs>
         <TabPanel value={value1} index={0}>
         <RowGrouping />
+        <DragableModalUI handleClose={handleClosexxx} handleSave={handleClosexxx1} >asdfasdf</DragableModalUI >
         </TabPanel>
         <TabPanel value={value1} index={1}>
           <span>  Zones Content</span>
@@ -94,7 +110,7 @@ function NavTabs() {
          */}
         <CustomDateTimePickerUI />
         <CustomDateTimePickerUI />
-        <RowGrouping />
+        <RowGroupingHistory />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <span>Reports Content</span>
